@@ -1,20 +1,25 @@
-/* Weather widget */
-.weather-widget-slot {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  background: #eef4f7;
+}
+
+.page-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
 }
 
 #weather-widget {
-  display: none;
   align-items: center;
   gap: 5px;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 20px;
-  padding: 3px 10px;
-  color: white;
+  background: #ffffff;
+  border: 1px solid #bfd0d8;
+  border-radius: 8px;
+  box-shadow: 0 5px 18px rgba(34, 62, 74, 0.12);
+  padding: 8px 12px;
+  color: #18333f;
   font-size: 12px;
   white-space: nowrap;
 }
@@ -22,5 +27,3 @@
 #weather-widget i { font-size: 14px; }
 #weather-text { font-weight: 600; }
 #weather-city { font-size: 10px; opacity: 0.7; }
-
-body.multiradios #weather-widget { display: none !important; }

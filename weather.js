@@ -16,10 +16,15 @@ async function loadWeatherWidget() {
 }
 
 async function initWeather() {
-  if (!navigator.geolocation) return;
-
   const widget = await loadWeatherWidget();
   if (!widget) return;
+
+  widget.style.display = 'flex';
+
+  if (!navigator.geolocation) {
+    showWeatherStatus('Ubicación no disponible');
+    return;
+  }
 
   navigator.geolocation.getCurrentPosition(async ({ coords }) => {
     const { latitude, longitude } = coords;
@@ -36,15 +41,21 @@ async function initWeather() {
 
       document.getElementById('weather-icon').className = `fas ${weatherIcon(weatherCode)}`;
       document.getElementById('weather-text').textContent = `${temperature}°C`;
-      widget.style.display = document.body.classList.contains('multiradios') && window.innerWidth > 768
-        ? 'none'
-        : 'flex';
 
       updateWeatherCity(latitude, longitude);
     } catch (error) {
       console.error('Error al obtener el clima:', error);
+      showWeatherStatus('No se pudo obtener el clima');
     }
-  }, () => {}, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+  }, () => {
+    showWeatherStatus('Permite tu ubicación para ver el clima');
+  }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+}
+
+function showWeatherStatus(message) {
+  document.getElementById('weather-icon').className = 'fas fa-location-dot';
+  document.getElementById('weather-text').textContent = '--°C';
+  document.getElementById('weather-city').textContent = message;
 }
 
 async function updateWeatherCity(latitude, longitude) {
